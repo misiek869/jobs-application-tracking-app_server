@@ -1,9 +1,13 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
 import express from 'express'
+const app = express()
 import morgan from 'morgan'
 
-const app = express()
+if (process.env.NODE_ENV === 'development') {
+	app.use(morgan('dev'))
+}
 
-app.use(morgan('dev'))
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -14,6 +18,8 @@ app.post('/', (req, res) => {
 	res.json({ message: 'data received', data: req.body })
 })
 
-app.listen(5000, () => {
+const port = process.env.PORT || 5000
+
+app.listen(port, () => {
 	console.log('server running...')
 })
