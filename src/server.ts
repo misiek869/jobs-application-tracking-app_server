@@ -1,1 +1,3 @@
-console.log('server is working..')
+import { value } from './test-default.js'
+
+console.log(value)
