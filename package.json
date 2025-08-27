@@ -4,10 +4,9 @@
 	"type": "module",
 	"main": "dist/server.js",
 	"scripts": {
-		"dev": "node --loader ts-node/esm src/server.ts",
+		"dev": "nodemon --watch src --ext ts,js --exec \"node --loader ts-node/esm ./src/server.ts\"",
 		"build": "tsc",
-		"start": "node dist/server.js",
-		"setup-project": "npm i && cd client npm i"
+		"start": "node dist/server.js"
 	},
 	"keywords": [],
 	"author": "",
