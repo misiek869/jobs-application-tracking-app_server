@@ -19,6 +19,7 @@
 	},
 	"dependencies": {
 		"@types/express": "^5.0.3",
+		"@types/morgan": "^1.9.10",
 		"bcrypt": "^6.0.0",
 		"concurrently": "^9.2.1",
 		"cookie-parser": "^1.4.7",
