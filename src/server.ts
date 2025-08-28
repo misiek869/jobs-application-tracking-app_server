@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
-import express from 'express'
+import express, { Request, Response } from 'express'
 const app = express()
 import morgan from 'morgan'
 import { nanoid } from 'nanoid'
@@ -16,15 +16,15 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json())
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
 	res.send('hello world')
 })
 
-app.post('/', (req, res) => {
+app.post('/', (req: Request, res: Response) => {
 	res.json({ message: 'data received', data: req.body })
 })
 
-app.get('/api/v1/jobs', (req, res) => {
+app.get('/api/v1/jobs', (req: Request, res: Response) => {
 	res.status(200).json({ jobs })
 })
 
