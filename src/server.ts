@@ -35,7 +35,7 @@ app.get('/api/v1/jobs/:id', (req: Request, res: Response) => {
 
 	const job = jobs.find(job => (job.id = id))
 	if (!job) {
-		return res.status(400).json({ msg: 'no job find' })
+		return res.status(404).json({ msg: 'no job find' })
 	}
 	res.status(200).json({ job })
 })
