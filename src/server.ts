@@ -29,6 +29,17 @@ app.get('/api/v1/jobs', (req: Request, res: Response) => {
 	res.status(200).json({ jobs })
 })
 
+// GET SINGLE JOBS
+app.get('/api/v1/jobs/:id', (req: Request, res: Response) => {
+	const { id } = req.params
+
+	const job = jobs.find(job => (job.id = id))
+	if (!job) {
+		return res.status(400).json({ msg: 'no job find' })
+	}
+	res.status(200).json({ job })
+})
+
 // CREATE JOB
 app.post('/api/v1/jobs', (req: Request, res: Response) => {
 	const { company, position } = req.body
