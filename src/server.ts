@@ -52,7 +52,7 @@ app.post('/api/v1/jobs', (req: Request, res: Response) => {
 	const job = { id, company, position }
 	jobs.push(job)
 
-	res.status(200).json({ job })
+	res.status(201).json({ job })
 })
 
 const port = process.env.PORT || 5000
