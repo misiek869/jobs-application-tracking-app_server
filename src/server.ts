@@ -4,6 +4,8 @@ import express, { Request, Response, NextFunction } from 'express'
 const app = express()
 import morgan from 'morgan'
 
+import jobRoutes from './routes/jobRouter.js'
+
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'))
 }
@@ -18,20 +20,7 @@ app.post('/', (req: Request, res: Response) => {
 	res.json({ message: 'data received', data: req.body })
 })
 
-// GET ALL JOBS
-app.get('/api/v1/jobs')
-
-// GET SINGLE JOB
-app.get('/api/v1/jobs/:id')
-
-// CREATE JOB
-app.post('/api/v1/jobs')
-
-// EDIT JOB
-app.patch('/api/v1/jobs/:id')
-
-// DELETE JOB
-app.delete('/api/v1/jobs/:id')
+app.use('/api/v1/jobs', jobRoutes)
 
 app.all(/.*/, (req: Request, res: Response) => {
 	res.status(404).json({ msg: 'not found' })
