@@ -25,13 +25,8 @@ export const getSingleJob = async (req: Request, res: Response) => {
 
 // CREATE JOB
 export const createJob = async (req: Request, res: Response) => {
-	try {
-		const job = await Job.create(req.body)
-		res.status(201).json({ job })
-	} catch (error) {
-		console.log(error)
-		res.status(500).json({ msg: 'server error' })
-	}
+	const job = await Job.create(req.body)
+	res.status(201).json({ job })
 }
 
 // EDIT JOB
