@@ -9,14 +9,14 @@ let jobs = [
 
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
+	const jobs = await Job.find({})
 	res.status(200).json({ jobs })
 }
 
 // GET SINGLE JOB
 export const getSingleJob = async (req: Request, res: Response) => {
 	const { id } = req.params
-
-	const job = jobs.find(job => (job.id = id))
+	const job = await Job.findById(id)
 	if (!job) {
 		return res.status(404).json({ msg: 'no job find' })
 	}
