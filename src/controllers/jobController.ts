@@ -1,11 +1,5 @@
-import { nanoid } from 'nanoid'
 import express, { Request, Response, NextFunction } from 'express'
 import Job from '../models/JobModel.js'
-
-let jobs = [
-	{ id: nanoid(), company: 'google', position: 'front' },
-	{ id: nanoid(), company: 'microsoft', position: 'backend' },
-]
 
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
