@@ -31,37 +31,29 @@ export const createJob = async (req: Request, res: Response) => {
 
 // EDIT JOB
 export const editJob = async (req: Request, res: Response) => {
-	const { company, position } = req.body
-
-	if (!company || !position) {
-		return res.status(400).json({ msg: 'please provide company and position' })
-	}
-
 	const { id } = req.params
 
-	const job = jobs.find(job => (job.id = id))
-	if (!job) {
+	const updatedJob = await Job.findByIdAndUpdate(id, req.body, {
+		new: true,
+		// runValidators: true,
+	})
+
+	if (!updatedJob) {
 		return res.status(404).json({ msg: 'no job find' })
 	}
 
-	job.company = company
-	job.position = position
-
-	res.status(200).json({ msg: 'job modified', job })
+	res.status(200).json({ msg: 'job modified', job: updatedJob })
 }
 
 // DELETE JOB
 export const deleteJob = async (req: Request, res: Response) => {
 	const { id } = req.params
 
-	const job = jobs.find(job => (job.id = id))
-	if (!job) {
+	const deletedJob = await Job.findByIdAndDelete(id)
+
+	if (!deletedJob) {
 		return res.status(404).json({ msg: 'no job find' })
 	}
-
-	const newJobs = jobs.filter(job => job.id !== id)
-
-	jobs = newJobs
 
 	res.status(200).json({ msg: 'job deleted' })
 }
