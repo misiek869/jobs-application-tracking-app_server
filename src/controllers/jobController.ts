@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction } from 'express'
 import Job from '../models/JobModel.js'
+import { StatusCodes } from 'http-status-codes'
 
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
 	const jobs = await Job.find({})
-	res.status(200).json({ jobs })
+	res.status(StatusCodes.OK).json({ jobs })
 }
 
 // GET SINGLE JOB
@@ -14,7 +15,7 @@ export const getSingleJob = async (req: Request, res: Response) => {
 	if (!job) {
 		return res.status(404).json({ msg: 'no job find' })
 	}
-	res.status(200).json({ job })
+	res.status(StatusCodes.OK).json({ job })
 }
 
 // CREATE JOB
@@ -36,7 +37,7 @@ export const editJob = async (req: Request, res: Response) => {
 		return res.status(404).json({ msg: 'no job find' })
 	}
 
-	res.status(200).json({ msg: 'job modified', job: updatedJob })
+	res.status(StatusCodes.OK).json({ msg: 'job modified', job: updatedJob })
 }
 
 // DELETE JOB
