@@ -10,6 +10,7 @@ import express, {
 import morgan from 'morgan'
 import jobRoutes from './routes/jobRouter.js'
 import mongoose from 'mongoose'
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
 
 const app = express()
 
@@ -37,11 +38,8 @@ app.use((req: Request, res: Response) => {
 })
 
 // global error handler
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-	console.error(err.stack || err)
-	res.status(500).json({ msg: 'something went wrong' })
-}
-app.use(errorHandler)
+
+app.use(errorHandlerMiddleware)
 
 // start server
 const port = process.env.PORT || 5000

@@ -34,9 +34,7 @@ export const editJob = async (req: Request, res: Response) => {
 		// runValidators: true,
 	})
 
-	if (!updatedJob) {
-		return res.status(404).json({ msg: 'no job find' })
-	}
+	if (!updatedJob) throw new NotFoundError(`Can't find this job`)
 
 	res.status(StatusCodes.OK).json({ msg: 'job modified', job: updatedJob })
 }
@@ -47,9 +45,7 @@ export const deleteJob = async (req: Request, res: Response) => {
 
 	const deletedJob = await Job.findByIdAndDelete(id)
 
-	if (!deletedJob) {
-		return res.status(404).json({ msg: 'no job find' })
-	}
+	if (!deletedJob) throw new NotFoundError(`Can't find this job`)
 
 	res.status(200).json({ msg: 'job deleted' })
 }
