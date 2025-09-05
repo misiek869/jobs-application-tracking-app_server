@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express'
 import Job from '../models/JobModel.js'
 import { StatusCodes } from 'http-status-codes'
+import { NotFoundError } from '../errors/customError.js'
 
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
@@ -12,9 +13,9 @@ export const getAllJobs = async (req: Request, res: Response) => {
 export const getSingleJob = async (req: Request, res: Response) => {
 	const { id } = req.params
 	const job = await Job.findById(id)
-	if (!job) {
-		return res.status(404).json({ msg: 'no job find' })
-	}
+
+	if (!job) throw new NotFoundError(`Can't find this job`)
+
 	res.status(StatusCodes.OK).json({ job })
 }
 
