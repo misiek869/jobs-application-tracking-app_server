@@ -11,6 +11,7 @@ import morgan from 'morgan'
 import jobRoutes from './routes/jobRouter.js'
 import mongoose from 'mongoose'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
+import { body, validationResult } from 'express-validator'
 
 const app = express()
 
@@ -26,9 +27,26 @@ app.get('/', (req: Request, res: Response) => {
 	res.send('hello world')
 })
 
-app.post('/', (req: Request, res: Response) => {
-	res.json({ message: 'data received', data: req.body })
-})
+app.post(
+	'/api/v1/test',
+	[body('name').notEmpty().withMessage('name is required')],
+	(req: Request, res: Response, next: NextFunction) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+			const errorMessages = errors.array().map(error => {
+				error.msg
+			})
+
+			return res.status(400).json({ errors: errorMessages })
+		}
+		next()
+	},
+	(req: Request, res: Response) => {
+		const { name } = req.body
+
+		res.json({ message: `hello ${name}` })
+	}
+)
 
 app.use('/api/v1/jobs', jobRoutes)
 
