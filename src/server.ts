@@ -28,7 +28,6 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post(
 	'/api/v1/test',
-	[body('name').notEmpty().withMessage('name is required')],
 
 	(req: Request, res: Response) => {
 		const { name } = req.body
