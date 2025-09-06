@@ -11,6 +11,7 @@ import morgan from 'morgan'
 import jobRoutes from './routes/jobRouter.js'
 import mongoose from 'mongoose'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
+import { validateTest } from './middleware/validationMIddleware.js'
 
 const app = express()
 
@@ -26,15 +27,11 @@ app.get('/', (req: Request, res: Response) => {
 	res.send('hello world')
 })
 
-app.post(
-	'/api/v1/test',
+app.post('/api/v1/test', validateTest, (req: Request, res: Response) => {
+	const { name } = req.body
 
-	(req: Request, res: Response) => {
-		const { name } = req.body
-
-		res.json({ message: `hello ${name}` })
-	}
-)
+	res.json({ message: `hello ${name}` })
+})
 
 app.use('/api/v1/jobs', jobRoutes)
 
