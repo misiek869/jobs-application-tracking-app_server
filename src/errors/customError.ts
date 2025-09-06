@@ -9,7 +9,7 @@ export class NotFoundError extends Error {
 	}
 }
 
-export class BarRequestError extends Error {
+export class BadRequestError extends Error {
 	statusCode: number
 	constructor(message: string) {
 		super(message)
