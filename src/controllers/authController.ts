@@ -1,10 +1,10 @@
-import express, { Request, Response, NextFunction } from 'express'
-import Job from '../models/JobModel.js'
+import { Request, Response, NextFunction } from 'express'
+import User from '../models/UserModel.js'
 import { StatusCodes } from 'http-status-codes'
-import { NotFoundError } from '../errors/customError.js'
 
 export const register = async (req: Request, res: Response) => {
-	res.send('register')
+	const user = await User.create(req.body)
+	res.status(StatusCodes.CREATED).json({ user })
 }
 export const login = async (req: Request, res: Response) => {
 	res.send('login')
