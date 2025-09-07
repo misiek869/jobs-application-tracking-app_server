@@ -9,6 +9,7 @@ import express, {
 } from 'express'
 import morgan from 'morgan'
 import jobRoutes from './routes/jobRouter.js'
+import authRoutes from './routes/authRouter.js'
 import mongoose from 'mongoose'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
 
@@ -27,6 +28,8 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.use('/api/v1/jobs', jobRoutes)
+
+app.use('/api/v1/auth', authRoutes)
 
 // 404 handler
 app.use((req: Request, res: Response) => {
