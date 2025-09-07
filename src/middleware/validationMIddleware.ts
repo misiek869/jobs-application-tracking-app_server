@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express'
 import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js'
 import mongoose from 'mongoose'
 import Job from '../models/JobModel.js'
+import User from '../models/UserModel.js'
 
 const withValidationErrors = (
 	validateValues: ValidationChain | ValidationChain[]
@@ -49,4 +50,25 @@ export const validateIdParam = withValidationErrors([
 
 		if (!job) throw new NotFoundError(`Can't find this job`)
 	}),
+])
+
+export const validateRegister = withValidationErrors([
+	body('name').notEmpty().withMessage('name is required'),
+	body('email')
+		.notEmpty()
+		.withMessage('email is required')
+		.isEmail()
+		.withMessage('invalid email format')
+		.custom(async email => {
+			const user = await User.findOne({ email })
+
+			if (user) throw new BadRequestError('email already exists')
+		}),
+	body('password')
+		.notEmpty()
+		.withMessage('password is required')
+		.isLength({ min: 8 })
+		.withMessage('password must be at least 8 characters'),
+	body('lastName').notEmpty().withMessage('lastName is required'),
+	body('location').notEmpty().withMessage('location is required'),
 ])
