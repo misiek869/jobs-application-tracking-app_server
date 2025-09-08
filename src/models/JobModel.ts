@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Model } from 'mongoose'
+import mongoose, { Schema, Document, Model, Types } from 'mongoose'
 import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js'
 
 export interface IJob extends Document {
@@ -9,6 +9,7 @@ export interface IJob extends Document {
 	jobLocation: string
 	createdAt: Date
 	updatedAt: Date
+	createdBy: Types.ObjectId
 }
 
 const JobSchema: Schema<IJob> = new Schema(
@@ -17,17 +18,22 @@ const JobSchema: Schema<IJob> = new Schema(
 		position: { type: String, required: true },
 		jobStatus: {
 			type: String,
-			enum: Object.values(JOB_STATUS) as IJob['jobStatus'][], // 👈 rzutowanie
+			enum: Object.values(JOB_STATUS) as IJob['jobStatus'][],
 			default: JOB_STATUS.PENDING,
 		},
 		jobType: {
 			type: String,
-			enum: Object.values(JOB_TYPE) as IJob['jobType'][], // 👈 rzutowanie
+			enum: Object.values(JOB_TYPE) as IJob['jobType'][],
 			default: JOB_TYPE.FULL_TIME,
 		},
 		jobLocation: {
 			type: String,
 			default: 'city',
+		},
+		createdBy: {
+			type: Schema.Types.ObjectId,
+			ref: 'User',
+			required: true,
 		},
 	},
 	{ timestamps: true }
