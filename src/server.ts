@@ -12,12 +12,17 @@ import jobRoutes from './routes/jobRouter.js'
 import authRoutes from './routes/authRouter.js'
 import mongoose from 'mongoose'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
+import { authenticateUser } from './middleware/authMiddleware.js'
+import cookieParser from 'cookie-parser'
 
 const app = express()
 
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'))
 }
+
+// cookie parser
+app.use(cookieParser())
 
 // body parser
 app.use(express.json())
@@ -27,7 +32,7 @@ app.get('/', (req: Request, res: Response) => {
 	res.send('hello world')
 })
 
-app.use('/api/v1/jobs', jobRoutes)
+app.use('/api/v1/jobs', authenticateUser, jobRoutes)
 
 app.use('/api/v1/auth', authRoutes)
 
