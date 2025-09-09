@@ -5,8 +5,7 @@ import { NotFoundError } from '../errors/customError.js'
 
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
-	console.log(req.user)
-	const jobs = await Job.find({})
+	const jobs = await Job.find({ createdBy: req.user?.userId })
 	res.status(StatusCodes.OK).json({ jobs })
 }
 
@@ -20,6 +19,7 @@ export const getSingleJob = async (req: Request, res: Response) => {
 
 // CREATE JOB
 export const createJob = async (req: Request, res: Response) => {
+	req.body.createdBy = req.user?.userId
 	const job = await Job.create(req.body)
 	res.status(201).json({ job })
 }
