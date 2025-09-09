@@ -15,6 +15,15 @@ import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
 import cookieParser from 'cookie-parser'
 
+declare module 'express-serve-static-core' {
+	interface Request {
+		user?: {
+			userId: string
+			role: string
+		}
+	}
+}
+
 const app = express()
 
 if (process.env.NODE_ENV === 'development') {
