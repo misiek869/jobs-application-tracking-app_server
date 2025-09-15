@@ -1,0 +1,16 @@
+import { Request, Response, NextFunction } from 'express'
+import User from '../models/UserModel.js'
+import Job from '../models/JobModel.js'
+import { StatusCodes } from 'http-status-codes'
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+	res.status(StatusCodes.OK).json({ msg: 'get current user' })
+}
+
+export const getApplicationStats = async (req: Request, res: Response) => {
+	res.status(StatusCodes.OK).json({ msg: 'app stats' })
+}
+
+export const updateUser = async (req: Request, res: Response) => {
+	res.status(StatusCodes.OK).json({ msg: 'update user' })
+}

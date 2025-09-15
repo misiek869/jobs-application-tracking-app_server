@@ -10,6 +10,7 @@ import express, {
 import morgan from 'morgan'
 import jobRoutes from './routes/jobRouter.js'
 import authRoutes from './routes/authRouter.js'
+import userRoutes from './routes/userRouter.js'
 import mongoose from 'mongoose'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
@@ -42,6 +43,8 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.use('/api/v1/jobs', authenticateUser, jobRoutes)
+
+app.use('/api/v1/users', userRoutes)
 
 app.use('/api/v1/auth', authRoutes)
 
