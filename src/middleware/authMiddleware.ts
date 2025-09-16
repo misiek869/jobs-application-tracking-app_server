@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import { UnauthenticatedError } from '../errors/customError.js'
+import {
+	UnauthenticatedError,
+	UnauthorizedError,
+} from '../errors/customError.js'
 import { verifyJWT } from '../utils/tokenUtils.js'
 import { JwtPayload } from 'jsonwebtoken'
 
@@ -25,5 +28,14 @@ export const authenticateUser = (
 		next()
 	} catch (error) {
 		throw new UnauthenticatedError('authentication problem')
+	}
+}
+
+export const authorizePermissions = (...role: string[]) => {
+	return (req: Request, res: Response, next: NextFunction) => {
+		if (!req.user || !role.includes(req.user.role)) {
+			throw new UnauthorizedError('only admin can see this route')
+		}
+		next()
 	}
 }
