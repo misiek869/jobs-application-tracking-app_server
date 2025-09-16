@@ -14,7 +14,10 @@ export const getApplicationStats = async (req: Request, res: Response) => {
 }
 
 export const updateUser = async (req: Request, res: Response) => {
-	const updatedUser = await User.findByIdAndUpdate(req.user?.userId, req.body)
+	const updatedUser = await User.findByIdAndUpdate(
+		req.user?.userId,
+		req.body
+	).select('-password')
 
 	res.status(StatusCodes.OK).json({ msg: 'update user' })
 }
