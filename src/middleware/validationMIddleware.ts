@@ -14,6 +14,7 @@ import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js'
 import mongoose from 'mongoose'
 import Job from '../models/JobModel.js'
 import User from '../models/UserModel.js'
+import { Types } from 'mongoose'
 
 const withValidationErrors = (
 	validateValues: ValidationChain | ValidationChain[]
@@ -93,4 +94,23 @@ export const validateLogin = withValidationErrors([
 		.isEmail()
 		.withMessage('invalid email format'),
 	body('password').notEmpty().withMessage('password is required'),
+])
+
+export const validateUpdateUser = withValidationErrors([
+	body('name').notEmpty().withMessage('name is required'),
+	body('email')
+		.notEmpty()
+		.withMessage('email is required')
+		.isEmail()
+		.withMessage('invalid email format')
+		.custom(async (email, { req }) => {
+			const user = await User.findOne({ email })
+
+			if (user && (user._id as Types.ObjectId).toString() !== req.user.userId) {
+				throw new BadRequestError('email already exists')
+			}
+		}),
+
+	body('lastName').notEmpty().withMessage('lastName is required'),
+	body('location').notEmpty().withMessage('location is required'),
 ])
