@@ -44,8 +44,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/v1/jobs', authenticateUser, jobRoutes)
 
-app.use('/api/v1/users', userRoutes)
-
+app.use('/api/v1/users', authenticateUser, userRoutes)
 app.use('/api/v1/auth', authRoutes)
 
 // 404 handler

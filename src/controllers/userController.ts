@@ -4,7 +4,9 @@ import Job from '../models/JobModel.js'
 import { StatusCodes } from 'http-status-codes'
 
 export const getCurrentUser = async (req: Request, res: Response) => {
-	res.status(StatusCodes.OK).json({ msg: 'get current user' })
+	const user = await User.findOne({ _id: req.user?.userId }).select('-password')
+
+	res.status(StatusCodes.OK).json({ user: user })
 }
 
 export const getApplicationStats = async (req: Request, res: Response) => {

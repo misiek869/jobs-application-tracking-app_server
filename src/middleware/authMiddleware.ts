@@ -8,7 +8,7 @@ interface TokenPayload extends JwtPayload {
 	role: string
 }
 
-export const authenticateUser = async (
+export const authenticateUser = (
 	req: Request,
 	res: Response,
 	next: NextFunction
