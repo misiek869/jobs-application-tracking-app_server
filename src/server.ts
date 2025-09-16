@@ -38,7 +38,7 @@ app.use(cookieParser())
 app.use(express.json())
 
 // routes
-app.get('/', (req: Request, res: Response) => {
+app.get('/api/v1/test', (req: Request, res: Response) => {
 	res.send('hello world')
 })
 
