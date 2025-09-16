@@ -10,7 +10,10 @@ export const getCurrentUser = async (req: Request, res: Response) => {
 }
 
 export const getApplicationStats = async (req: Request, res: Response) => {
-	res.status(StatusCodes.OK).json({ msg: 'app stats' })
+	const users = await User.countDocuments()
+	const jobs = await Job.countDocuments()
+
+	res.status(StatusCodes.OK).json({ users, jobs })
 }
 
 export const updateUser = async (req: Request, res: Response) => {
