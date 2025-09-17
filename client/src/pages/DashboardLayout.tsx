@@ -1,8 +1,9 @@
-import { Outlet } from 'react-router'
+import { Outlet, useLoaderData, redirect, data } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/Dashboard'
 import { BigSidebar, Navbar, SmallSidebar } from '../components'
 import { createContext, useContext, useState } from 'react'
 import { checkTheme } from '../App'
+import customFetch from '../utils/customFetch'
 
 type DashboardContextType = {
 	user: { name: string }
@@ -17,9 +18,18 @@ const DashboardContext = createContext<DashboardContextType | undefined>(
 	undefined
 )
 
+export const loader = async () => {
+	try {
+		const { data } = await customFetch.get('/users/current-user')
+		return data
+	} catch (error) {
+		return redirect('/')
+	}
+}
+
 const DashboardLayout = () => {
-	// temporary
-	const user = { name: 'john' }
+	const { user } = useLoaderData()
+
 	const [showSidebar, setShowSidebar] = useState<boolean>(false)
 	const [isDarkTheme, setIsDarkTheme] = useState<boolean>(checkTheme())
 
@@ -55,7 +65,7 @@ const DashboardLayout = () => {
 					<div>
 						<Navbar />
 						<div className='dashboard-page'>
-							<Outlet />
+							<Outlet context={{ user }} />
 						</div>
 					</div>
 				</main>
