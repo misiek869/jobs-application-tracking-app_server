@@ -4,15 +4,22 @@ import { FormRow, Logo } from '../components'
 import { Form, redirect, useNavigation, Link } from 'react-router-dom'
 import customFetch from '../utils/customFetch'
 import type { ActionFunctionArgs } from 'react-router'
+import { toast } from 'react-toastify'
+import { AxiosError } from 'axios'
 
 export const action = async ({ request }: ActionFunctionArgs) => {
 	const formData = await request.formData()
 	const data = Object.fromEntries(formData)
 	try {
 		await customFetch.post('/auth/register', data)
+		toast.success('Registration success')
 		return redirect('/login')
-	} catch (error) {
-		console.log(error)
+	} catch (err) {
+		const error = err as AxiosError<{ message: string }>
+		const message = error.response?.data?.message || 'Something went wrong'
+		toast.error(message)
+		return null
+
 		return error
 	}
 }
