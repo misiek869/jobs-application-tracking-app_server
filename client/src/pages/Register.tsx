@@ -1,11 +1,29 @@
 import Wrapper from '../assets/wrappers/LoginPage'
-import { Link } from 'react-router'
+
 import { FormRow, Logo } from '../components'
+import { Form, redirect, useNavigation, Link } from 'react-router-dom'
+import customFetch from '../utils/customFetch'
+import type { ActionFunctionArgs } from 'react-router'
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+	const formData = await request.formData()
+	const data = Object.fromEntries(formData)
+	try {
+		await customFetch.post('/auth/register', data)
+		return redirect('/login')
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}
 
 const Register = () => {
+	const navigation = useNavigation()
+	const isSubmitting = navigation.state === 'submitting'
+
 	return (
 		<Wrapper>
-			<form className='form'>
+			<Form method='post' className='form'>
 				<Logo />
 				<h4>Register</h4>
 				<FormRow type='text' name='name' defaultValue='michael' />
@@ -18,8 +36,8 @@ const Register = () => {
 				<FormRow type='text' name='location' defaultValue='oświęcim' />
 				<FormRow type='email' name='email' defaultValue='michael@michael.com' />
 				<FormRow type='password' name='password' defaultValue='1234' />
-				<button type='submit' className='btn btn-block'>
-					submit
+				<button disabled={isSubmitting} type='submit' className='btn btn-block'>
+					{isSubmitting ? 'submitting...' : 'submit'}
 				</button>
 				<p>
 					Already have an account?
@@ -27,7 +45,7 @@ const Register = () => {
 						Login
 					</Link>
 				</p>
-			</form>
+			</Form>
 		</Wrapper>
 	)
 }
