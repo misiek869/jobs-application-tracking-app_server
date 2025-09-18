@@ -8,7 +8,7 @@ const Wrapper = styled.aside`
 		box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
 
 		.sidebar-container {
-			background: var(--backgound-secondary-color);
+			background: var(--background-secondary-color);
 			min-height: 100vh;
 			height: 100%;
 			width: 250px;
@@ -62,6 +62,9 @@ const Wrapper = styled.aside`
 
 		.active {
 			color: var(--primary-500);
+		}
+		.pending {
+			background: var(--background-color);
 		}
 	}
 `

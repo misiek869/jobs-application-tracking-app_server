@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import customFetch from '../utils/customFetch'
+import type { ActionFunctionArgs } from 'react-router'
+import { AxiosError } from 'axios'
 
 type User = {
 	name: string
@@ -21,6 +23,21 @@ type User = {
 
 type OutletContext = {
 	user: User
+}
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+	const formData = await request.formData()
+	const data = Object.fromEntries(formData)
+	try {
+		await customFetch.post('/jobs', data)
+		toast.success('Job Created')
+		return redirect('all-jobs')
+	} catch (err) {
+		const error = err as AxiosError<{ message: string }>
+		const message = error.response?.data?.message || 'Something went wrong'
+		toast.error(message)
+		return error
+	}
 }
 
 const AddJob = () => {

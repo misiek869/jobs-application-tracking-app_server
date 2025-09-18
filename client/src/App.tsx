@@ -17,6 +17,7 @@ import {
 
 import { action as registerAction } from './pages/Register'
 import { action as loginAction } from './pages/Login'
+import { action as addJobAction } from './pages/AddJob'
 import { loader as dashboardLoader } from './pages/DashboardLayout'
 
 export const checkTheme = (): boolean => {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
 					{
 						index: true,
 						element: <AddJob />,
+						action: addJobAction,
 					},
 					{ path: 'stats', element: <Stats /> },
 					{ path: 'all-jobs', element: <AllJobs /> },
