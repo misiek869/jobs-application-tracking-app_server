@@ -42,6 +42,24 @@ const AddJob = () => {
 						labelText='job location'
 						defaultValue={user.location}
 					/>
+					<div className='form-row'>
+						<label htmlFor='jobStatus' className='form-label'>
+							job status
+						</label>
+						<select
+							name='jobStatus'
+							id='jobStatus'
+							className='form-select'
+							defaultValue={JOB_STATUS.PENDING}>
+							{Object.values(JOB_STATUS).map(item => {
+								return (
+									<option key={item} value={item}>
+										{item}
+									</option>
+								)
+							})}
+						</select>
+					</div>
 					<button
 						type='submit'
 						className='btn btn-block form-btn'
