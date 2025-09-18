@@ -1,4 +1,4 @@
-import { FormRow } from '../components'
+import { FormRow, FormRowSelect } from '../components'
 import Wrapper from '../assets/wrappers/Dashboard'
 import { JOB_STATUS, JOB_TYPE } from '../../../src/utils/constants'
 import {
@@ -42,24 +42,19 @@ const AddJob = () => {
 						labelText='job location'
 						defaultValue={user.location}
 					/>
-					<div className='form-row'>
-						<label htmlFor='jobStatus' className='form-label'>
-							job status
-						</label>
-						<select
-							name='jobStatus'
-							id='jobStatus'
-							className='form-select'
-							defaultValue={JOB_STATUS.PENDING}>
-							{Object.values(JOB_STATUS).map(item => {
-								return (
-									<option key={item} value={item}>
-										{item}
-									</option>
-								)
-							})}
-						</select>
-					</div>
+					<FormRowSelect
+						name='jobStatus'
+						labelText='job status'
+						list={Object.values(JOB_STATUS)}
+						defaultValue={JOB_STATUS.PENDING}
+					/>
+					<FormRowSelect
+						name='jobType'
+						labelText='job type'
+						list={Object.values(JOB_TYPE)}
+						defaultValue={JOB_TYPE.FULL_TIME}
+					/>
+
 					<button
 						type='submit'
 						className='btn btn-block form-btn'
