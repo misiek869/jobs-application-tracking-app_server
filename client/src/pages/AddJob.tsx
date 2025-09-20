@@ -1,5 +1,5 @@
 import { FormRow, FormRowSelect } from '../components'
-import Wrapper from '../assets/wrappers/Dashboard'
+import Wrapper from '../assets/wrappers/DashboardFormPage'
 import { JOB_STATUS, JOB_TYPE } from '../../../src/utils/constants'
 import {
 	Form,
