@@ -1,9 +1,17 @@
-import { UseAllJobsContext } from '../pages/AllJobs'
+import { useAllJobsContext, type JobType } from '../pages/AllJobs'
 import Job from './Job'
 import Wrapper from '../assets/wrappers/JobsContainer'
 
 const JobsContainer = () => {
-	const { data } = UseAllJobsContext()
+	const data = useAllJobsContext()
+
+	if (!data) {
+		return (
+			<Wrapper>
+				<h2>Loading jobs...</h2>
+			</Wrapper>
+		)
+	}
 	const { jobs } = data
 
 	if (jobs.length === 0) {
@@ -17,8 +25,8 @@ const JobsContainer = () => {
 	return (
 		<Wrapper>
 			<div className='jobs'></div>
-			{jobs.map(job => {
-				return <Job key={join._id} {...job} />
+			{jobs.map((job: JobType) => {
+				return <Job key={job._id} {...job} />
 			})}
 		</Wrapper>
 	)

@@ -6,7 +6,7 @@ import { useContext, createContext } from 'react'
 // import { error } from 'console'
 import { AxiosError } from 'axios'
 
-type JobType = {
+export type JobType = {
 	company: string
 	position: string
 	jobStatus: 'interview' | 'declined' | 'pending'
@@ -15,6 +15,7 @@ type JobType = {
 	createdAt: string
 	updatedAt: string
 	createdBy: string
+	_id: string
 }
 type JobsResponse = {
 	jobs: JobType[]
@@ -26,6 +27,7 @@ type AllJobsContextType = JobsResponse
 export const loader = async () => {
 	try {
 		const { data } = await customFetch.get<JobsResponse>('/jobs')
+
 		return { data }
 	} catch (err) {
 		const error = err as AxiosError<{ message: string }>
@@ -38,16 +40,17 @@ export const loader = async () => {
 const AllJobsContext = createContext<AllJobsContextType | null>(null)
 
 const AllJobs = () => {
-	const { data } = useLoaderData() as JobsResponse
+	const { data } = useLoaderData() as { data: JobsResponse }
 
 	return (
-		<AllJobsContext.Provider value={{ data }}>
+		<AllJobsContext.Provider value={data}>
 			<SearchContainer />
 			<JobsContainer />
 		</AllJobsContext.Provider>
 	)
 }
 
-export const UseAllJobsContext = () => useContext(AllJobsContext)
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAllJobsContext = () => useContext(AllJobsContext)
 
 export default AllJobs
