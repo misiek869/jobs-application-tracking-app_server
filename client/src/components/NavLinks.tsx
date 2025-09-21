@@ -9,6 +9,11 @@ const NavLinks = ({ isBigSidebar }: { isBigSidebar: boolean }) => {
 		<div className='nav-links'>
 			{links.map(link => {
 				const { text, icon, path } = link
+
+				const { role } = user
+
+				if (path === 'admin' && role !== 'admin') return
+
 				return (
 					<NavLink
 						onClick={isBigSidebar ? undefined : toggleSidebar}
