@@ -11,10 +11,18 @@ import morgan from 'morgan'
 import jobRoutes from './routes/jobRouter.js'
 import authRoutes from './routes/authRouter.js'
 import userRoutes from './routes/userRouter.js'
+
+//public assets
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import path from 'path'
+
 import mongoose from 'mongoose'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
 import cookieParser from 'cookie-parser'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 declare module 'express-serve-static-core' {
 	interface Request {
@@ -26,6 +34,7 @@ declare module 'express-serve-static-core' {
 }
 
 const app = express()
+app.use(express.static(path.resolve(__dirname, '../public/uploads')))
 
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'))
