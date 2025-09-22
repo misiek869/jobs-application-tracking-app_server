@@ -22,7 +22,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	}
 
 	try {
-		await customFetch.get('/users/update-user', formData)
+		await customFetch.patch('/users/update-user', formData)
 		toast.success('profile updated')
 	} catch (err) {
 		const error = err as AxiosError<{ message: string }>

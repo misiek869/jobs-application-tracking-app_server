@@ -17,6 +17,8 @@ export const getApplicationStats = async (req: Request, res: Response) => {
 }
 
 export const updateUser = async (req: Request, res: Response) => {
+	console.log(req.file)
+
 	const updatedUser = await User.findByIdAndUpdate(
 		req.user?.userId,
 		req.body
