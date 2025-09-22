@@ -1,7 +1,37 @@
-import { Form, useNavigation, useOutletContext } from 'react-router'
+import {
+	Form,
+	useNavigation,
+	useOutletContext,
+	type ActionFunctionArgs,
+} from 'react-router'
 import Wrapper from '../assets/wrappers/DashboardFormPage'
 import { toast } from 'react-toastify'
 import { FormRow } from '../components'
+import customFetch from '../utils/customFetch'
+import { AxiosError } from 'axios'
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+	const formData = await request.formData()
+	const file = formData.get('avatar')
+
+	if (file instanceof File) {
+		if (file.size > 500000) {
+			toast.warning('image size too large')
+			return null
+		}
+	}
+
+	try {
+		await customFetch.get('/users/update-user', formData)
+		toast.success('profile updated')
+	} catch (err) {
+		const error = err as AxiosError<{ message: string }>
+		const message = error.response?.data?.message || 'Something went wrong'
+		toast.error(message)
+	}
+
+	return null
+}
 
 type User = {
 	name: string
