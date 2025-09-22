@@ -7,6 +7,8 @@ export interface IUser extends Document {
 	lastName: string
 	location: string
 	role: 'user' | 'admin'
+	avatar: string
+	avatarPublicId: string
 }
 
 const UserSchema: Schema<IUser> = new mongoose.Schema({
@@ -26,6 +28,8 @@ const UserSchema: Schema<IUser> = new mongoose.Schema({
 		enum: ['user', 'admin'],
 		default: 'user',
 	},
+	avatar: String,
+	avatarPublicId: String,
 })
 
 const User: Model<IUser> = mongoose.model<IUser>('User', UserSchema)
