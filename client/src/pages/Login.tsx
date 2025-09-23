@@ -1,4 +1,4 @@
-import { Form, redirect, Link } from 'react-router-dom'
+import { Form, redirect, Link, useNavigate } from 'react-router-dom'
 import { Logo, FormRow, SubmitBtn } from '../components'
 import Wrapper from '../assets/wrappers/LoginPage'
 import { toast } from 'react-toastify'
@@ -11,7 +11,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = Object.fromEntries(formData)
 	try {
 		await customFetch.post('/auth/login', data)
-		toast.success('Login successfull')
+		toast.success('Login sucessfull')
 		return redirect('/dashboard')
 	} catch (err) {
 		const error = err as AxiosError<{ message: string }>
@@ -22,6 +22,25 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 const Login = () => {
+	const navigate = useNavigate()
+
+	const demoUser = async () => {
+		const data = {
+			email: 'test@test.com',
+			password: 'secret123',
+		}
+		try {
+			await customFetch.post('/auth/login', data)
+			toast.success('Login sucessfull')
+			return navigate('/dashboard')
+		} catch (err) {
+			const error = err as AxiosError<{ message: string }>
+			const message = error.response?.data?.message || 'Something went wrong'
+			toast.error(message)
+			return error
+		}
+	}
+
 	return (
 		<Wrapper>
 			<Form method='post' className='form'>
@@ -30,7 +49,7 @@ const Login = () => {
 				<FormRow type='email' name='email' defaultValue='michael@michael.com' />
 				<FormRow type='password' name='password' defaultValue='1234' />
 				<SubmitBtn />
-				<button type='button' className='btn btn-block'>
+				<button type='button' className='btn btn-block' onClick={demoUser}>
 					Explore without Login
 				</button>
 				<p>
