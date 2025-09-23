@@ -6,8 +6,22 @@ import { checkTheme } from '../App'
 import customFetch from '../utils/customFetch'
 import { toast } from 'react-toastify'
 
+type User = {
+	name: string
+	email: string
+	password: string
+	lastName: string
+	location: string
+	role: 'user' | 'admin'
+	avatar?: string
+}
+
+// type OutletContext = {
+// 	user: User
+// }
+
 type DashboardContextType = {
-	user: { name: string }
+	user: User
 	showSidebar: boolean
 	isDarkTheme: boolean
 	toggleDarkTheme: () => void
@@ -24,6 +38,7 @@ export const loader = async () => {
 		const { data } = await customFetch.get('/users/current-user')
 		return data
 	} catch (error) {
+		console.log('dasbboard loader error', error)
 		return redirect('/')
 	}
 }
