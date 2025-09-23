@@ -2,7 +2,6 @@ import {
 	Form,
 	redirect,
 	useLoaderData,
-	useNavigation,
 	type LoaderFunctionArgs,
 	type ActionFunctionArgs,
 } from 'react-router-dom'
@@ -10,7 +9,7 @@ import customFetch from '../utils/customFetch'
 import { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
 import Wrapper from '../assets/wrappers/EditJob'
-import { FormRow, FormRowSelect } from '../components'
+import { FormRow, FormRowSelect, SubmitBtn } from '../components'
 import type { JobType } from './AllJobs'
 import { JOB_STATUS, JOB_TYPE } from '../../../src/utils/constants'
 
@@ -47,10 +46,6 @@ type JobResponse = { job: JobType }
 const EditJob = () => {
 	const { job } = useLoaderData<JobResponse>()
 
-	const navigation = useNavigation()
-
-	const isSubmitting = navigation.state === 'submitting'
-
 	return (
 		<Wrapper>
 			<Form method='post' className='form'>
@@ -76,12 +71,7 @@ const EditJob = () => {
 						defaultValue={job.jobType}
 						list={Object.values(JOB_TYPE)}
 					/>
-					<button
-						className='btn btn-submit btn-block form-btn'
-						disabled={isSubmitting}
-						type='submit'>
-						{isSubmitting ? 'editting...' : 'edit'}
-					</button>
+					<SubmitBtn formBtn />
 				</div>
 			</Form>
 		</Wrapper>
