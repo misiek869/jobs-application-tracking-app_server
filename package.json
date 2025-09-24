@@ -9,7 +9,8 @@
 		"dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
 		"build": "tsc",
 		"start": "node dist/server.js",
-		"setup-project": "npm i && cd client && npm i"
+		"setup-project": "npm i && cd client && npm i",
+		"populate": "node --loader ts-node/esm ./src/populate.ts"
 	},
 	"keywords": [],
 	"author": "",
