@@ -24,7 +24,7 @@ export const authenticateUser = (
 
 	try {
 		const { userId, role } = verifyJWT(token) as TokenPayload
-		const testUser = userId === '68d2205a096dcb7037d50557'
+		const testUser = userId === '68d36ed64207e431da5a05f1'
 		req.user = { userId, role, testUser }
 
 		next()

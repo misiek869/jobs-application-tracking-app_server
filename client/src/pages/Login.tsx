@@ -11,7 +11,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = Object.fromEntries(formData)
 	try {
 		await customFetch.post('/auth/login', data)
-		toast.success('Login sucessfull')
+		toast.success('Login successful')
 		return redirect('/dashboard')
 	} catch (err) {
 		const error = err as AxiosError<{ message: string }>
@@ -31,7 +31,7 @@ const Login = () => {
 		}
 		try {
 			await customFetch.post('/auth/login', data)
-			toast.success('Login sucessfull')
+			toast.success('Login successful')
 			return navigate('/dashboard')
 		} catch (err) {
 			const error = err as AxiosError<{ message: string }>
