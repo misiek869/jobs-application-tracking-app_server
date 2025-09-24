@@ -36,6 +36,7 @@ declare module 'express-serve-static-core' {
 		user?: {
 			userId: string
 			role: string
+			testUser: boolean
 		}
 	}
 }

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import {
 	UnauthenticatedError,
 	UnauthorizedError,
+	BadRequestError,
 } from '../errors/customError.js'
 import { verifyJWT } from '../utils/tokenUtils.js'
 import { JwtPayload } from 'jsonwebtoken'
@@ -9,6 +10,7 @@ import { JwtPayload } from 'jsonwebtoken'
 interface TokenPayload extends JwtPayload {
 	userId: string
 	role: string
+	testUser: boolean
 }
 
 export const authenticateUser = (
@@ -22,8 +24,8 @@ export const authenticateUser = (
 
 	try {
 		const { userId, role } = verifyJWT(token) as TokenPayload
-
-		req.user = { userId, role }
+		const testUser = userId === '68d2205a096dcb7037d50557'
+		req.user = { userId, role, testUser }
 
 		next()
 	} catch (error) {
@@ -38,4 +40,13 @@ export const authorizePermissions = (...role: string[]) => {
 		}
 		next()
 	}
+}
+
+export const checkForTestUSer = (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	if (req.user?.testUser) throw new BadRequestError('Test User. Read Only.')
+	next()
 }

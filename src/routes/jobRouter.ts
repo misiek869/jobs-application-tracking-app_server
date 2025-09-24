@@ -13,11 +13,18 @@ import {
 	validateJobInput,
 	validateIdParam,
 } from '../middleware/validationMIddleware.js'
+import { checkForTestUSer } from '../middleware/authMiddleware.js'
 
 router.get('/', getAllJobs)
-router.post('/', validateJobInput, createJob)
+router.post('/', checkForTestUSer, validateJobInput, createJob)
 router.get('/:id', validateIdParam, getSingleJob)
-router.patch('/:id', validateJobInput, editJob)
-router.delete('/:id', validateIdParam, validateIdParam, deleteJob)
+router.patch('/:id', checkForTestUSer, validateJobInput, editJob)
+router.delete(
+	'/:id',
+	checkForTestUSer,
+	validateIdParam,
+	validateIdParam,
+	deleteJob
+)
 
 export default router
