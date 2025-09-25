@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from 'express'
 import Job from '../models/JobModel.js'
 import { StatusCodes } from 'http-status-codes'
 import { NotFoundError } from '../errors/customError.js'
+import mongoose from 'mongoose'
+import dayjs from 'dayjs'
 
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
@@ -43,4 +45,29 @@ export const deleteJob = async (req: Request, res: Response) => {
 	const deletedJob = await Job.findByIdAndDelete(id)
 
 	res.status(200).json({ msg: 'job deleted' })
+}
+
+export const showStats = async (req: Request, res: Response) => {
+	const defaultData = {
+		pending: 22,
+		interview: 11,
+		declined: 3,
+	}
+
+	let monthlyApplications = [
+		{
+			date: 'May 22',
+			count: 12,
+		},
+		{
+			date: 'June 22',
+			count: 12,
+		},
+		{
+			date: 'August 22',
+			count: 12,
+		},
+	]
+
+	res.status(StatusCodes.OK).json({ defaultData, monthlyApplications })
 }
