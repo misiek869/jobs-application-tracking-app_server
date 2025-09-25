@@ -5,6 +5,8 @@ import { NotFoundError } from '../errors/customError.js'
 import mongoose from 'mongoose'
 import dayjs from 'dayjs'
 
+const day = dayjs
+
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
 	const jobs = await Job.find({ createdBy: req.user?.userId })
@@ -48,26 +50,52 @@ export const deleteJob = async (req: Request, res: Response) => {
 }
 
 export const showStats = async (req: Request, res: Response) => {
+	let aggregationResult: { _id: string; count: number }[] = await Job.aggregate(
+		[
+			{ $match: { createdBy: new mongoose.Types.ObjectId(req.user?.userId) } },
+			{ $group: { _id: '$jobStatus', count: { $sum: 1 } } },
+		]
+	)
+
+	let stats = aggregationResult.reduce<Record<string, number>>((acc, curr) => {
+		const { _id: title, count } = curr
+		acc[title] = count
+		return acc
+	}, {})
+
 	const defaultData = {
-		pending: 22,
-		interview: 11,
-		declined: 3,
+		pending: stats.pending || 0,
+		interview: stats.interview || 0,
+		declined: stats.declined || 0,
 	}
 
-	let monthlyApplications = [
+	let monthlyApplications = await Job.aggregate([
+		{ $match: { createdBy: new mongoose.Types.ObjectId(req.user?.userId) } },
 		{
-			date: 'May 22',
-			count: 12,
+			$group: {
+				_id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } },
+				count: { $sum: 1 },
+			},
 		},
-		{
-			date: 'June 22',
-			count: 12,
-		},
-		{
-			date: 'August 22',
-			count: 12,
-		},
-	]
+		{ $sort: { '_id.year': -1, '_id.month': -1 } },
+		{ $limit: 6 },
+	])
+
+	monthlyApplications = monthlyApplications
+		.map((item, index) => {
+			const {
+				_id: { year, month },
+				count,
+			} = item
+
+			const date = day()
+				.month(month - 1)
+				.year(year)
+				.format('MMM YY')
+
+			return { date, count }
+		})
+		.reverse()
 
 	res.status(StatusCodes.OK).json({ defaultData, monthlyApplications })
 }
