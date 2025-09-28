@@ -8,7 +8,7 @@ type ChartsContainerProps = {
 	count: number
 }
 
-const ChartsContainer = ({ data }: { data: ChartsContainerProps }) => {
+const ChartsContainer = ({ data }: { data: ChartsContainerProps[] }) => {
 	const [barChart, setBarChart] = useState<boolean>(true)
 
 	return (
