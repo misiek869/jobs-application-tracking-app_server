@@ -15,7 +15,7 @@ type JobQuery = {
 }
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
-	const { search, jobStatus, jobType } = req.query
+	const { search, jobStatus, jobType, sort } = req.query
 
 	const queryObject: JobQuery = {
 		createdBy: req.user?.userId,
@@ -36,7 +36,20 @@ export const getAllJobs = async (req: Request, res: Response) => {
 		queryObject.jobType = jobType
 	}
 
-	const jobs = await Job.find(queryObject)
+	const sortOptions: Record<string, string> = {
+		newest: '-createdAt',
+		oldest: 'createdAt',
+		'a-z': 'position',
+		'z-a': '-position',
+	}
+
+	let sortKey = sortOptions.newest
+
+	if (typeof sort === 'string' && sortOptions[sort]) {
+		sortKey = sortOptions[sort]
+	}
+
+	const jobs = await Job.find(queryObject).sort(sortKey)
 	res.status(StatusCodes.OK).json({ jobs })
 }
 
