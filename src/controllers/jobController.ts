@@ -7,9 +7,26 @@ import dayjs from 'dayjs'
 
 const day = dayjs
 
+type JobQuery = {
+	createdBy: string | undefined
+	$or?: { position?: object; company?: object }[]
+}
 // GET ALL JOBS
 export const getAllJobs = async (req: Request, res: Response) => {
-	const jobs = await Job.find({ createdBy: req.user?.userId })
+	const { search } = req.query
+
+	const queryObject: JobQuery = {
+		createdBy: req.user?.userId,
+	}
+
+	if (typeof search === 'string' && search.trim() !== '') {
+		queryObject.$or = [
+			{ position: { $regex: search, $options: 'i' } },
+			{ company: { $regex: search, $options: 'i' } },
+		]
+	}
+
+	const jobs = await Job.find(queryObject)
 	res.status(StatusCodes.OK).json({ jobs })
 }
 
