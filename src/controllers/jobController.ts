@@ -50,7 +50,10 @@ export const getAllJobs = async (req: Request, res: Response) => {
 	}
 
 	const jobs = await Job.find(queryObject).sort(sortKey)
-	res.status(StatusCodes.OK).json({ jobs })
+
+	const totalJobs = await Job.countDocuments(queryObject)
+
+	res.status(StatusCodes.OK).json({ totalJobs, jobs })
 }
 
 // GET SINGLE JOB
