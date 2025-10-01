@@ -5,6 +5,7 @@ import { useLoaderData } from 'react-router-dom'
 import { useContext, createContext } from 'react'
 // import { error } from 'console'
 import { AxiosError } from 'axios'
+import type { Request } from 'express'
 
 export type JobType = {
 	company: string
@@ -24,9 +25,13 @@ type JobsResponse = {
 
 type AllJobsContextType = JobsResponse
 
-export const loader = async () => {
+export const loader = async ({ request }: { request: Request }) => {
+	const params = Object.fromEntries([
+		...new URL(request.url).searchParams.entries(),
+	])
+
 	try {
-		const { data } = await customFetch.get<JobsResponse>('/jobs')
+		const { data } = await customFetch.get<JobsResponse>('/jobs', { params })
 
 		return { data }
 	} catch (err) {
