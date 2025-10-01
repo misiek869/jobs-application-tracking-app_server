@@ -49,11 +49,20 @@ export const getAllJobs = async (req: Request, res: Response) => {
 		sortKey = sortOptions[sort]
 	}
 
-	const jobs = await Job.find(queryObject).sort(sortKey).limit(1)
+	// pagination
+	const page = Number(req.query.page) || 1
+
+	const limit = Number(req.query.limit) || 10
+
+	const skip = (page - 1) * limit
+
+	const jobs = await Job.find(queryObject).sort(sortKey).skip(skip).limit(limit)
 
 	const totalJobs = await Job.countDocuments(queryObject)
 
-	res.status(StatusCodes.OK).json({ totalJobs, jobs })
+	const pages = Math.ceil(totalJobs / limit)
+
+	res.status(StatusCodes.OK).json({ totalJobs, pages, currentPage: page, jobs })
 }
 
 // GET SINGLE JOB
