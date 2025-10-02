@@ -3,9 +3,16 @@ type FormRowProps = {
 	name: string
 	labelText?: string
 	defaultValue?: string
+	onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const FormRow = ({ type, name, labelText, defaultValue }: FormRowProps) => {
+const FormRow = ({
+	type,
+	name,
+	labelText,
+	defaultValue,
+	onChange,
+}: FormRowProps) => {
 	return (
 		<div className='form-row'>
 			<label htmlFor={name} className='form-label'>
@@ -18,6 +25,7 @@ const FormRow = ({ type, name, labelText, defaultValue }: FormRowProps) => {
 				className='form-input'
 				defaultValue={defaultValue || ''}
 				required
+				onChange={onChange}
 			/>
 		</div>
 	)

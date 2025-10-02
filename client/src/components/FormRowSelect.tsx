@@ -3,6 +3,7 @@ type FormRowSelectProps = {
 	labelText: string
 	list: string[]
 	defaultValue?: string
+	onChange?: React.ChangeEventHandler<HTMLSelectElement>
 }
 
 const FormRowSelect = ({
@@ -10,6 +11,7 @@ const FormRowSelect = ({
 	labelText,
 	list,
 	defaultValue = '',
+	onChange,
 }: FormRowSelectProps) => {
 	return (
 		<div className='form-row'>
@@ -18,6 +20,7 @@ const FormRowSelect = ({
 			</label>
 			<select
 				name={name}
+				onChange={onChange}
 				id={name}
 				className='form-select'
 				defaultValue={defaultValue}>
