@@ -18,12 +18,26 @@ export type JobType = {
 	createdBy: string
 	_id: string
 }
+
+type JobsSearchValues = {
+	search?: string
+	jobStatus?: 'all' | 'interview' | 'declined' | 'pending'
+	jobType?: 'all' | 'full-time' | 'part-time' | 'internship'
+	sort?: 'newest' | 'oldest' | 'a-z' | 'z-a'
+}
+
 type JobsResponse = {
 	jobs: JobType[]
+	params: JobsSearchValues
 	// totalJobs: number
 }
 
-type AllJobsContextType = JobsResponse
+type LoaderData = {
+	data: JobsResponse
+	searchValues: JobsSearchValues
+}
+
+type AllJobsContextType = LoaderData
 
 export const loader = async ({ request }: { request: Request }) => {
 	const params = Object.fromEntries([
@@ -32,8 +46,7 @@ export const loader = async ({ request }: { request: Request }) => {
 
 	try {
 		const { data } = await customFetch.get<JobsResponse>('/jobs', { params })
-
-		return { data }
+		return { data, searchValues: { ...params } }
 	} catch (err) {
 		const error = err as AxiosError<{ message: string }>
 		const message = error.response?.data?.message || 'Something went wrong'
@@ -45,10 +58,13 @@ export const loader = async ({ request }: { request: Request }) => {
 const AllJobsContext = createContext<AllJobsContextType | null>(null)
 
 const AllJobs = () => {
-	const { data } = useLoaderData() as { data: JobsResponse }
+	const { data, searchValues } = useLoaderData() as {
+		data: JobsResponse
+		searchValues: JobsSearchValues
+	}
 
 	return (
-		<AllJobsContext.Provider value={data}>
+		<AllJobsContext.Provider value={{ data, searchValues }}>
 			<SearchContainer />
 			<JobsContainer />
 		</AllJobsContext.Provider>

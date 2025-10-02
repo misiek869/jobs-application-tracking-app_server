@@ -12,7 +12,7 @@ const JobsContainer = () => {
 			</Wrapper>
 		)
 	}
-	const { jobs } = data
+	const { jobs } = data.data
 
 	if (jobs.length === 0) {
 		return (
