@@ -7,10 +7,23 @@ import { useAllJobsContext } from '../pages/AllJobs'
 const SearchContainer = () => {
 	const searchValues = useAllJobsContext()
 
-	console.log(searchValues)
 	const { search, jobStatus, jobType, sort } = searchValues.searchValues
 
 	const submit = useSubmit()
+
+	const debounce = (
+		onChange: (form: HTMLFormElement) => void
+	): React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> => {
+		let timeout: ReturnType<typeof setTimeout>
+		return e => {
+			const form = e.currentTarget.form
+			if (!form) return
+			clearTimeout(timeout)
+			timeout = setTimeout(() => {
+				onChange(form)
+			}, 2000)
+		}
+	}
 
 	return (
 		<Wrapper>
@@ -30,9 +43,9 @@ const SearchContainer = () => {
 						name='jobStatus'
 						list={['all', ...Object.values(JOB_STATUS)]}
 						defaultValue={jobStatus}
-						onChange={e => {
-							submit(e.currentTarget.form)
-						}}
+						onChange={debounce(form => {
+							submit(form)
+						})}
 					/>
 					<FormRowSelect
 						labelText='job type'
