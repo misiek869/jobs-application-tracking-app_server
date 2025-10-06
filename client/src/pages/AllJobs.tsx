@@ -29,7 +29,9 @@ type JobsSearchValues = {
 type JobsResponse = {
 	jobs: JobType[]
 	params: JobsSearchValues
-	// totalJobs: number
+	totalJobs: number
+	pages: number
+	currentPage: number
 }
 
 type LoaderData = {
