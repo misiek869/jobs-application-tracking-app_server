@@ -15,9 +15,36 @@ const PageBtnContainer = () => {
 
 	const { pages, currentPage } = data.data
 
-	console.log(pages, currentPage)
+	const pagesArray = Array.from({ length: pages }, (_, index: number) => {
+		return index + 1
+	})
+	console.log(pagesArray)
 
-	return <div>PageBtnContainer</div>
+	return (
+		<Wrapper>
+			<button className='btn prev-btn'>
+				<FaChevronLeft />
+				prev
+			</button>
+			<div className='btn-container'>
+				{pagesArray.map(pageNumber => {
+					return (
+						<button
+							key={pageNumber}
+							className={`btn page-btn ${
+								pageNumber === currentPage && 'active'
+							}`}>
+							{pageNumber}
+						</button>
+					)
+				})}
+			</div>
+			<button className='btn next-btn'>
+				next
+				<FaChevronRight />
+			</button>
+		</Wrapper>
+	)
 }
 
 export default PageBtnContainer
