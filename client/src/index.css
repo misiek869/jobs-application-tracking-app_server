@@ -14,7 +14,19 @@ html {
 
 :root {
 	/* colors */
-	--primary-50: #e0fcff;
+
+	--primary-50: #ffe8e0;
+	--primary-100: #ffd2c2;
+	--primary-200: #ffb299;
+	--primary-300: #ff8c66;
+	--primary-400: #f1663c;
+	--primary-500: #e04f24;
+	--primary-600: #c7421a;
+	--primary-700: #a83816;
+	--primary-800: #8b2f12;
+	--primary-900: #661f0b;
+
+	/* --primary-50: #e0fcff;
 	--primary-100: #bef8fd;
 	--primary-200: #87eaf2;
 	--primary-300: #54d1db;
@@ -23,7 +35,7 @@ html {
 	--primary-600: #14919b;
 	--primary-700: #0e7c86;
 	--primary-800: #0a6c74;
-	--primary-900: #044e54;
+	--primary-900: #044e54; */
 
 	/* grey */
 	--grey-50: #f8fafc;
@@ -36,6 +48,7 @@ html {
 	--grey-700: #334155;
 	--grey-800: #1e293b;
 	--grey-900: #0f172a;
+
 	/* rest of the colors */
 	--black: #222;
 	--white: #fff;
@@ -65,10 +78,14 @@ html {
 		0 10px 10px -5px rgba(0, 0, 0, 0.04);
 	/* DARK MODE */
 
-	--dark-mode-bg-color: #333;
+	--dark-mode-bg-color: #0f1d2e;
+	--dark-mode-text-color: #f0f0f0;
+	--dark-mode-bg-secondary-color: #14273e;
+	--dark-mode-text-secondary-color: var(--grey-300);
+	/* --dark-mode-bg-color: #333;
 	--dark-mode-text-color: #f0f0f0;
 	--dark-mode-bg-secondary-color: #3f3f3f;
-	--dark-mode-text-secondary-color: var(--grey-300);
+	--dark-mode-text-secondary-color: var(--grey-300); */
 
 	--background-color: var(--grey-50);
 	--text-color: var(--grey-900);
@@ -176,7 +193,7 @@ ul {
 .btn {
 	cursor: pointer;
 	color: var(--white);
-	background: var(--primary-500);
+	background: var(--primary-600);
 	border: transparent;
 	border-radius: var(--border-radius);
 	letter-spacing: var(--letter-spacing);
