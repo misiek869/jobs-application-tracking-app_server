@@ -30,6 +30,7 @@ const Wrapper = styled.section`
 
 	.btn {
 		margin-top: 1rem;
+		font-size: 1.15rem;
 	}
 
 	.member-btn {
