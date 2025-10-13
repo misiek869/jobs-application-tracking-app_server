@@ -1,11 +1,7 @@
 import { FormRow, FormRowSelect, SubmitBtn } from '../components'
 import Wrapper from '../assets/wrappers/DashboardFormPage'
 import { JOB_STATUS, JOB_TYPE } from '../../../src/utils/constants'
-import { Form, redirect, useOutletContext } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import customFetch from '../utils/customFetch'
-import type { ActionFunctionArgs } from 'react-router'
-import { AxiosError } from 'axios'
+import { Form, useOutletContext } from 'react-router-dom'
 
 type User = {
 	name: string
@@ -18,21 +14,6 @@ type User = {
 
 type OutletContext = {
 	user: User
-}
-
-export const action = async ({ request }: ActionFunctionArgs) => {
-	const formData = await request.formData()
-	const data = Object.fromEntries(formData)
-	try {
-		await customFetch.post('/jobs', data)
-		toast.success('Job Created')
-		return redirect('all-jobs')
-	} catch (err) {
-		const error = err as AxiosError<{ message: string }>
-		const message = error.response?.data?.message || 'Something went wrong'
-		toast.error(message)
-		return error
-	}
 }
 
 const AddJob = () => {
