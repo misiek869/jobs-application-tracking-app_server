@@ -42,6 +42,9 @@ const Wrapper = styled.section`
 
 	.btn {
 		padding: 0.75rem 1rem;
+
+		font-weight: 700;
+		letter-spacing: 2px;
 	}
 
 	@media (min-width: 992px) {
@@ -52,6 +55,10 @@ const Wrapper = styled.section`
 
 		.main-img {
 			display: block;
+		}
+
+		.btn {
+			font-size: 1.15rem;
 		}
 	}
 `
