@@ -42,7 +42,6 @@ const Wrapper = styled.section`
 
 	.btn {
 		padding: 0.75rem 1rem;
-
 		font-weight: 700;
 		letter-spacing: 2px;
 	}

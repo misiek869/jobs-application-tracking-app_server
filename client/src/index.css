@@ -58,6 +58,7 @@ html {
 	--green-dark: #0f5132;
 
 	--small-text: 0.875rem;
+	--medium-text: 1.25rem;
 	--extra-small-text: 0.7em;
 	/* rest of the vars */
 
@@ -345,4 +346,16 @@ button:disabled {
 .declined {
 	background: #ffeeee;
 	color: #d66a6a;
+}
+
+@media (min-width: 992px) {
+	.form-label {
+		font-size: var(--medium-text);
+	}
+
+	.btn {
+		font-size: 1.15rem;
+		font-weight: 700;
+		letter-spacing: 2px;
+	}
 }
