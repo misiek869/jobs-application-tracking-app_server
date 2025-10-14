@@ -17,7 +17,7 @@ import {
 import { action as registerAction } from './actions/registerAction'
 import { action as loginAction } from './actions/loginAction'
 import { action as addJobAction } from './actions/addJobAction'
-import { action as editJobAction } from './pages/EditJob'
+import { action as editJobAction } from './actions/editJobAction'
 import { action as deleteJobAction } from './pages/DeleteJob'
 import { action as profileAction } from './pages/Profile'
 import { loader as dashboardLoader } from './pages/DashboardLayout'
