@@ -14,7 +14,7 @@ import {
 	Stats,
 } from './pages'
 
-import { action as registerAction } from './pages/Register'
+import { action as registerAction } from './actions/registerAction'
 import { action as loginAction } from './pages/Login'
 import { action as addJobAction } from './actions/addJobAction'
 import { loader as dashboardLoader } from './pages/DashboardLayout'
