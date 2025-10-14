@@ -1,11 +1,7 @@
-import { toast } from 'react-toastify'
 import { JobsContainer, SearchContainer } from '../components'
-import customFetch from '../utils/customFetch'
 import { useLoaderData } from 'react-router-dom'
 import { useContext, createContext } from 'react'
 // import { error } from 'console'
-import { AxiosError } from 'axios'
-import type { Request } from 'express'
 
 export type JobType = {
 	company: string
@@ -19,14 +15,14 @@ export type JobType = {
 	_id: string
 }
 
-type JobsSearchValues = {
+export type JobsSearchValues = {
 	search?: string
 	jobStatus?: 'all' | 'interview' | 'declined' | 'pending'
 	jobType?: 'all' | 'full-time' | 'part-time' | 'internship'
 	sort?: 'newest' | 'oldest' | 'a-z' | 'z-a'
 }
 
-type JobsResponse = {
+export type JobsResponse = {
 	jobs: JobType[]
 	params: JobsSearchValues
 	totalJobs: number
@@ -40,22 +36,6 @@ type LoaderData = {
 }
 
 type AllJobsContextType = LoaderData
-
-export const loader = async ({ request }: { request: Request }) => {
-	const params = Object.fromEntries([
-		...new URL(request.url).searchParams.entries(),
-	])
-
-	try {
-		const { data } = await customFetch.get<JobsResponse>('/jobs', { params })
-		return { data, searchValues: { ...params } }
-	} catch (err) {
-		const error = err as AxiosError<{ message: string }>
-		const message = error.response?.data?.message || 'Something went wrong'
-		toast.error(message)
-		throw error
-	}
-}
 
 const AllJobsContext = createContext<AllJobsContextType | null>(null)
 
