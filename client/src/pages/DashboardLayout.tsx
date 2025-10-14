@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData, redirect, useNavigate } from 'react-router-dom'
+import { Outlet, useLoaderData, useNavigate } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/Dashboard'
 import { BigSidebar, Navbar, SmallSidebar } from '../components'
 import { createContext, useContext, useState } from 'react'
@@ -32,16 +32,6 @@ type DashboardContextType = {
 const DashboardContext = createContext<DashboardContextType | undefined>(
 	undefined
 )
-
-export const loader = async () => {
-	try {
-		const { data } = await customFetch.get('/users/current-user')
-		return data
-	} catch (error) {
-		console.log('dasbboard loader error', error)
-		return redirect('/')
-	}
-}
 
 const DashboardLayout = () => {
 	const { user } = useLoaderData()
