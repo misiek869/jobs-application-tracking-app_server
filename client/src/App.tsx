@@ -24,7 +24,7 @@ import { loader as dashboardLoader } from './loaders/dashboardLoader'
 import { loader as allJobsLoader } from './loaders/allJobsLoader'
 import { loader as editJobLoader } from './loaders/editJobLoader'
 import { loader as statsLoader } from './loaders/statsLoader'
-import { loader as adminPageLoader } from './pages/Admin'
+import { loader as adminPageLoader } from './loaders/adminLoader'
 
 export const checkTheme = (): boolean => {
 	const isDarkTheme = localStorage.getItem('darkTheme') === 'true'
