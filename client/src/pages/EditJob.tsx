@@ -1,28 +1,8 @@
-import {
-	Form,
-	redirect,
-	useLoaderData,
-	type LoaderFunctionArgs,
-} from 'react-router-dom'
-import customFetch from '../utils/customFetch'
-import { AxiosError } from 'axios'
-import { toast } from 'react-toastify'
+import { Form, useLoaderData } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/EditJob'
 import { FormRow, FormRowSelect, SubmitBtn } from '../components'
 import type { JobType } from './AllJobs'
 import { JOB_STATUS, JOB_TYPE } from '../../../src/utils/constants'
-
-export const loader = async ({ params }: LoaderFunctionArgs) => {
-	try {
-		const { data } = await customFetch.get(`/jobs/${params.id}`)
-		return data
-	} catch (err) {
-		const error = err as AxiosError<{ message: string }>
-		const message = error.response?.data?.message || 'Something went wrong'
-		toast.error(message)
-		return redirect('/dashboard/all-jobs')
-	}
-}
 
 type JobResponse = { job: JobType }
 
