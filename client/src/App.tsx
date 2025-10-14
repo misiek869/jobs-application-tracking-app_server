@@ -23,7 +23,7 @@ import { action as profileAction } from './actions/profileAction'
 import { loader as dashboardLoader } from './loaders/dashboardLoader'
 import { loader as allJobsLoader } from './loaders/allJobsLoader'
 import { loader as editJobLoader } from './loaders/editJobLoader'
-import { loader as statsLoader } from './pages/Stats'
+import { loader as statsLoader } from './loaders/statsLoader'
 import { loader as adminPageLoader } from './pages/Admin'
 
 export const checkTheme = (): boolean => {
