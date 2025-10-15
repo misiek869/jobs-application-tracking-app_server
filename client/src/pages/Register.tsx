@@ -1,10 +1,11 @@
 import Wrapper from '../assets/wrappers/LoginPage'
 import { FormRow, Logo } from '../components'
-import { Form, useNavigation, Link } from 'react-router-dom'
+import { Form, useNavigation, Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {
 	const navigation = useNavigation()
 	const isSubmitting = navigation.state === 'submitting'
+	const navigate = useNavigate()
 
 	return (
 		<Wrapper>
@@ -30,6 +31,12 @@ const Register = () => {
 						Login
 					</Link>
 				</p>
+				<button
+					type='button'
+					className='btn back-btn'
+					onClick={() => navigate(-1)}>
+					Back
+				</button>
 			</Form>
 		</Wrapper>
 	)
