@@ -46,7 +46,7 @@ const Wrapper = styled.section`
 		margin-left: -2.5rem;
 		padding: 0.5rem 0;
 		box-sizing: border-box;
-		margin-top: 1rem;
+		margin-top: 3rem;
 		border-top-right-radius: 0;
 		border-top-left-radius: 0;
 	}
