@@ -3,6 +3,7 @@ import { Logo, FormRow, SubmitBtn } from '../components'
 import Wrapper from '../assets/wrappers/LoginPage'
 import { toast } from 'react-toastify'
 import { AxiosError } from 'axios'
+import customFetch from '../utils/customFetch'
 
 const Login = () => {
 	const navigate = useNavigate()
@@ -41,6 +42,12 @@ const Login = () => {
 						Register
 					</Link>
 				</p>
+				<button
+					type='button'
+					className='btn back-btn'
+					onClick={() => navigate(-1)}>
+					Back
+				</button>
 			</Form>
 		</Wrapper>
 	)
