@@ -14,7 +14,7 @@ const Wrapper = styled.section`
 	.form {
 		max-width: 400px;
 		border-top: 3px solid var(--primary-500);
-		border-bottom: 3px solid var(--primary-500);
+		padding: 2rem 2.5rem 0 2.5rem;
 	}
 
 	h4 {
@@ -38,6 +38,17 @@ const Wrapper = styled.section`
 		color: var(--primary-500);
 		letter-spacing: var(--letter-spacing);
 		margin-left: 0.25rem;
+	}
+
+	.back-btn {
+		display: block;
+		width: calc(100% + 5rem);
+		margin-left: -2.5rem;
+		padding: 0.5rem 0;
+		box-sizing: border-box;
+		margin-top: 1rem;
+		border-top-right-radius: 0;
+		border-top-left-radius: 0;
 	}
 `
 
